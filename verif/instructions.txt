@@ -1,3 +1,1 @@
-addi x4,x0,-25
-addi x5,x0,30
-slti x6,x4,30
+lui x6,52
