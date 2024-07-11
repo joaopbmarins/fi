@@ -1,3 +1,3 @@
-addi x4,x0,5
+addi x4,x0,12
 addi x5,x0,3
-srli x6,x4,2
+srai x6,x4,2
