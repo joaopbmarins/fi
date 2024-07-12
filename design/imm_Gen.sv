@@ -17,8 +17,11 @@ module imm_Gen (
       7'b0100011:  /*S-type*/
       Imm_out = {inst_code[31] ? 20'hFFFFF : 20'b0, inst_code[31:25], inst_code[11:7]};
 
+      // 7'b1101111: /*J_type*/
+      // Imm_out: {32'b0};
+
       7'b0110111: /*U-type*/
-      Imm_out = {inst_code[31:12], 12'b0};
+      Imm_out = {inst_code[31] ? 12'hFFFFF : 12'b0, inst_code[31:12]};
 
       7'b1100011:  /*B-type*/
       Imm_out = {
