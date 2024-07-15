@@ -34,8 +34,8 @@ module Controller (
   assign BR = 7'b1100011;  //beq
 
   assign ALUSrc = (Opcode == LW || Opcode == SW || Opcode == I_TYPE || Opcode == U_TYPE || Opcode == J_TYPE || Opcode == IJ_TYPE);
-  assign MemtoReg[0] = (Opcode == LW);
-  assign MemtoReg[1] = (Opcode == J_TYPE || Opcode == IJ_TYPE);
+  assign MemtoReg[0] = (Opcode == LW || Opcode == U_TYPE);
+  assign MemtoReg[1] = (Opcode == J_TYPE || Opcode == IJ_TYPE || Opcode == U_TYPE);
   assign RegWrite = (Opcode == R_TYPE || Opcode == LW || Opcode == I_TYPE || Opcode == U_TYPE || Opcode == J_TYPE ||Opcode == IJ_TYPE);
   assign MemRead = (Opcode == LW);
   assign MemWrite = (Opcode == SW);

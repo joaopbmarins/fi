@@ -307,10 +307,10 @@ module Datapath #(
 
   //--// The LAST Block
   mux4 #(32) resmux (
-      D.Alu_Result,
-      D.MemReadData,
-      D.Pc_Four, //novas entradas no MUX
-      D.Pc_Imm,
+      D.Alu_Result,//00
+      D.MemReadData,//01
+      D.Pc_Four, //10 novas entradas no MUX
+      D.Imm_Out,//11
       D.MemtoReg,
       WrmuxSrc
   );
