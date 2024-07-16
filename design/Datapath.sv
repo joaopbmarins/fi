@@ -18,13 +18,13 @@ module Datapath #(
     MemRead,  // Memroy Reading Enable
     Branch,  // Branch Enable
     JalrSel,
-    input  logic [          1:0] ALUOp,
+    input  logic [          2:0] ALUOp,
     input  logic [ALU_CC_W -1:0] ALU_CC,         // ALU Control Code ( input of the ALU )
     input  logic [          1:0] MemtoReg,  // Register file writing enable   // Memory or ALU MUX
     output logic [          6:0] opcode,
     output logic [          6:0] Funct7,
     output logic [          2:0] Funct3,
-    output logic [          1:0] ALUOp_Current,
+    output logic [          2:0] ALUOp_Current,
     output logic [   DATA_W-1:0] WB_Data,        //Result After the last MUX
 
     // Para depuração no tesbench:
