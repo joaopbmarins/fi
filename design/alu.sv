@@ -34,7 +34,7 @@ module alu#(
             4'b1000:        // Equal
                     ALUResult = (SrcA == SrcB) ? 1 : 0;
             4'b1001:        // LUI
-                    ALUResult = {SrcB[19:0], 12'b0};
+                    ALUResult = 1;
             4'b1010:        // BNE
                     ALUResult = (SrcA != SrcB) ? 1 : 0;
             4'b1011:        // BLT
