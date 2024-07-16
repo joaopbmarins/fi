@@ -36,12 +36,14 @@ module datamemory #(
 
     if (MemRead) begin
       case (Funct3)
-        3'b010:  //LW
-        rd <= Dataout;
         3'b000: //LB 8bit
-        rd <= {Dataout[15] ? 24'hFFFFFF : 24'b0, Dataout[15:8]};
+        rd <= a[1:0] == 2'b00 ? {Dataout[7] ? 24'hFFFFFFF : 24'b0, Dataout[7:0]} : a[1:0] == 2'b01 ? {Dataout[15] ? 24'hFFFFFFF : 24'b0, Dataout[15:8]} : a[1:0] == 2'b10 ? {Dataout[24] ? 24'hFFFFFFF : 24'b0, Dataout[23:16]} : {Dataout[31] ? 24'hFFFFFFF : 24'b0, Dataout[31:24]};
         3'b001: //LH 16bit
-        rd <= {Dataout[15] ? 15'hFFFFF : 15'b0, Dataout[15:0]};
+        rd <= a[1:0] == 2'b00 ? {Dataout[15] ? 16'hFFFFFFF : 16'b0, Dataout[15:0]} : a[1:0] == 2'b01 ? {Dataout[15] ? 16'hFFFFFFF : 16'b0, Dataout[15:0]} : a[1:0] == 2'b10 ? {Dataout[24] ? 16'hFFFFFFF : 16'b0, Dataout[31:16]} : {Dataout[31] ? 16'hFFFFFFF : 16'b0, Dataout[31:16]};
+        3'b010:  //LW 32bit
+        rd <= Dataout;
+        3'b100:  //LBU
+        rd <= a[1:0] == 2'b00 ? {24'b0, Dataout[7:0]} : a[1:0] == 2'b01 ? {24'b0, Dataout[15:8]} : a[1:0] == 2'b10 ? {24'b0, Dataout[23:16]} : {24'b0, Dataout[31:24]};
         default: rd <= Dataout;
       endcase
     end else if (MemWrite) begin
