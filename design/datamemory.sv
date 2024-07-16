@@ -38,6 +38,10 @@ module datamemory #(
       case (Funct3)
         3'b010:  //LW
         rd <= Dataout;
+        3'b000: //LB 8bit
+        rd <= {Dataout[15] ? 24'hFFFFFF : 24'b0, Dataout[15:8]};
+        3'b001: //LH 16bit
+        rd <= {Dataout[15] ? 15'hFFFFF : 15'b0, Dataout[15:0]};
         default: rd <= Dataout;
       endcase
     end else if (MemWrite) begin
