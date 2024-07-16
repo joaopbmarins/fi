@@ -137,6 +137,7 @@ module Datapath #(
         begin
       B.ALUSrc <= 0;
       B.MemtoReg <= 0;
+      B.JalrSel <= 0;
       B.RegWrite <= 0;
       B.MemRead <= 0;
       B.MemWrite <= 0;
@@ -155,6 +156,7 @@ module Datapath #(
     end else begin
       B.ALUSrc <= ALUsrc;
       B.MemtoReg <= MemtoReg;
+      B.JalrSel <= JalrSel;
       B.RegWrite <= RegWrite;
       B.MemRead <= MemRead;
       B.MemWrite <= MemWrite;
@@ -223,7 +225,7 @@ module Datapath #(
       B.ImmG,
       B.Branch,
       ALUResult,
-      JalrSel,
+      B.JalrSel,
       BrImm,
       Old_PC_Four,
       BrPC,
