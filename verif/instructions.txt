@@ -4,3 +4,4 @@ lw x9,0(x0)
 or x4,x2,x0
 add x6,x4,x2
 jalr x12,x0,12
+addi x13,x0,5

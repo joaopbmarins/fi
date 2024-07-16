@@ -22,7 +22,7 @@ module Controller (
     output logic JalrSel
 );
 
-  logic [6:0] R_TYPE, I_TYPE, U_TYPE, J_TYPE, LW, SW, BR;
+  logic [6:0] R_TYPE, I_TYPE, U_TYPE, J_TYPE, IJ_TYPE, LW, SW, BR;
 
   assign R_TYPE = 7'b0110011;  //add,and
   assign I_TYPE = 7'b0010011;  //addi
