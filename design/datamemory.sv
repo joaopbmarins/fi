@@ -48,6 +48,14 @@ module datamemory #(
       endcase
     end else if (MemWrite) begin
       case (Funct3)
+        3'b000: begin //SB
+          Wr <= a[1:0] == 2'b00 ? 4'b0001 : a[1:0] == 2'b01 ? 4'b0010 : a[1:0] == 2'b10 ? 4'b0100 : 4'b1000;
+          Datain <= wd;
+        end
+        3'b001: begin //SH
+          Wr <= a[1:0] == 2'b00 ? 4'b0011 : a[1:0] == 2'b01 ? 4'b0011 : a[1:0] == 2'b10 ? 4'b1100 : 4'b1100;
+          Datain <= wd;
+        end
         3'b010: begin  //SW
           Wr <= 4'b1111;
           Datain <= wd;
