@@ -19,7 +19,7 @@ module BranchUnit #(
 
   assign PC_Full = {23'b0, Cur_PC};
 
-  assign PC_Imm = JalrSel ? PC_Full + AluResult: PC_Full + Imm;
+  assign PC_Imm = JalrSel ? AluResult + Imm: PC_Full + Imm;
   assign PC_Four = PC_Full + 32'b100;
   assign Branch_Sel = Branch && (AluResult[0] || JalrSel);  // 0:Branch is taken; 1:Branch is not taken
 
