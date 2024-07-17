@@ -3,3 +3,5 @@ sb x7,2(x0)
 lw x9,0(x0)
 sh x7,2(x0)
 lw x8,0(x0)
+halt   
+addi x18,x0,69 

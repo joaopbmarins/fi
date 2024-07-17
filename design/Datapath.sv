@@ -18,6 +18,7 @@ module Datapath #(
     MemRead,  // Memroy Reading Enable
     Branch,  // Branch Enable
     JalrSel,
+    halt,
     input  logic [          2:0] ALUOp,
     input  logic [ALU_CC_W -1:0] ALU_CC,         // ALU Control Code ( input of the ALU )
     input  logic [          1:0] MemtoReg,  // Register file writing enable   // Memory or ALU MUX
@@ -62,6 +63,7 @@ module Datapath #(
   adder #(9) pcadd (
       PC,
       9'b100,
+      halt,
       PCPlus4
   );
   mux2 #(9) pcmux (
@@ -82,6 +84,10 @@ module Datapath #(
       PC,
       Instr
   );
+
+  always_comb begin
+    reset  <= halt || reset;
+  end
 
   // IF_ID_Reg A;
   always @(posedge clk) begin

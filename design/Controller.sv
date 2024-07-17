@@ -6,6 +6,7 @@ module Controller (
     //7-bit opcode field from the instruction
 
     //Outputs
+    output logic halt,
     output logic ALUSrc,
     //0: The second ALU operand comes from the second register file output (Read data 2); 
     //1: The second ALU operand is the sign-extended, lower 16 bits of the instruction.
