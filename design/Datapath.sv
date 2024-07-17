@@ -63,7 +63,7 @@ module Datapath #(
   adder #(9) pcadd (
       PC,
       9'b100,
-      halt,
+      C.halt,
       PCPlus4
   );
   mux2 #(9) pcmux (
@@ -84,10 +84,6 @@ module Datapath #(
       PC,
       Instr
   );
-
-  always_comb begin
-    reset  <= halt || reset;
-  end
 
   // IF_ID_Reg A;
   always @(posedge clk) begin
@@ -143,6 +139,7 @@ module Datapath #(
         begin
       B.ALUSrc <= 0;
       B.MemtoReg <= 0;
+      B.halt <= halt;
       B.JalrSel <= 0;
       B.RegWrite <= 0;
       B.MemRead <= 0;
@@ -162,6 +159,7 @@ module Datapath #(
     end else begin
       B.ALUSrc <= ALUsrc;
       B.MemtoReg <= MemtoReg;
+      B.halt <= halt;
       B.JalrSel <= JalrSel;
       B.RegWrite <= RegWrite;
       B.MemRead <= MemRead;
@@ -244,6 +242,7 @@ module Datapath #(
         begin
       C.RegWrite <= 0;
       C.MemtoReg <= 0;
+      C.halt <= halt;
       C.MemRead <= 0;
       C.MemWrite <= 0;
       C.Pc_Imm <= 0;
@@ -257,6 +256,7 @@ module Datapath #(
     end else begin
       C.RegWrite <= B.RegWrite;
       C.MemtoReg <= B.MemtoReg;
+      C.halt <= B.halt;
       C.MemRead <= B.MemRead;
       C.MemWrite <= B.MemWrite;
       C.Pc_Imm <= BrImm;
@@ -294,6 +294,7 @@ module Datapath #(
         begin
       D.RegWrite <= 0;
       D.MemtoReg <= 0;
+      D.halt <= halt;
       D.Pc_Imm <= 0;
       D.Pc_Four <= 0;
       D.Imm_Out <= 0;
@@ -303,6 +304,7 @@ module Datapath #(
     end else begin
       D.RegWrite <= C.RegWrite;
       D.MemtoReg <= C.MemtoReg;
+      D.halt <= C.halt;
       D.Pc_Imm <= C.Pc_Imm;
       D.Pc_Four <= C.Pc_Four;
       D.Imm_Out <= C.Imm_Out;

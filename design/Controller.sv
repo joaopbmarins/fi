@@ -23,13 +23,14 @@ module Controller (
     output logic JalrSel
 );
 
-  logic [6:0] R_TYPE, I_TYPE, U_TYPE, J_TYPE, IJ_TYPE, LW, SW, BR;
+  logic [6:0] R_TYPE, I_TYPE, U_TYPE, J_TYPE, IJ_TYPE, H_TYPE, LW, SW, BR;
 
   assign R_TYPE = 7'b0110011;  //add,and
   assign I_TYPE = 7'b0010011;  //addi
   assign IJ_TYPE = 7'b1100111; //jalr
   assign U_TYPE = 7'b0110111; //lui
   assign J_TYPE = 7'b1101111; //jal
+  assign H_TYPE = 7'b1111111;
   assign LW = 7'b0000011;  //lw
   assign SW = 7'b0100011;  //sw
   assign BR = 7'b1100011;  //beq
@@ -45,4 +46,5 @@ module Controller (
   assign ALUOp[2] = (Opcode == J_TYPE || Opcode == IJ_TYPE);
   assign Branch = (Opcode == BR || Opcode == J_TYPE || Opcode == IJ_TYPE);
   assign JalrSel = (Opcode == IJ_TYPE);
+  assign halt = (Opcode == H_TYPE);
 endmodule
