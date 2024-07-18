@@ -63,7 +63,7 @@ module Datapath #(
   adder #(9) pcadd (
       PC,
       9'b100,
-      C.halt,
+      D.halt,
       PCPlus4
   );
   mux2 #(9) pcmux (
@@ -139,7 +139,7 @@ module Datapath #(
         begin
       B.ALUSrc <= 0;
       B.MemtoReg <= 0;
-      B.halt <= halt;
+      B.halt <= 0;
       B.JalrSel <= 0;
       B.RegWrite <= 0;
       B.MemRead <= 0;
@@ -242,7 +242,7 @@ module Datapath #(
         begin
       C.RegWrite <= 0;
       C.MemtoReg <= 0;
-      C.halt <= halt;
+      C.halt <= 0;
       C.MemRead <= 0;
       C.MemWrite <= 0;
       C.Pc_Imm <= 0;
@@ -294,7 +294,7 @@ module Datapath #(
         begin
       D.RegWrite <= 0;
       D.MemtoReg <= 0;
-      D.halt <= halt;
+      D.halt <= 0;
       D.Pc_Imm <= 0;
       D.Pc_Four <= 0;
       D.Imm_Out <= 0;

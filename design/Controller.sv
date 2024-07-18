@@ -46,5 +46,5 @@ module Controller (
   assign ALUOp[2] = (Opcode == J_TYPE || Opcode == IJ_TYPE);
   assign Branch = (Opcode == BR || Opcode == J_TYPE || Opcode == IJ_TYPE);
   assign JalrSel = (Opcode == IJ_TYPE);
-  assign halt = (Opcode == H_TYPE);
+  assign halt = halt ? 1 : (Opcode == H_TYPE);
 endmodule
