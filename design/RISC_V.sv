@@ -27,6 +27,10 @@ module riscv #(
   logic [2:0] Funct3;
   logic [3:0] Operation;
 
+  initial begin
+     halt = 0; 
+  end
+
   Controller c (
       opcode,
       halt,

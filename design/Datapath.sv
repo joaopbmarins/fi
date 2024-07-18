@@ -87,7 +87,7 @@ module Datapath #(
 
   // IF_ID_Reg A;
   always @(posedge clk) begin
-    if ((reset) || (PcSel))   // initialization or flush
+    if ((reset) || (PcSel) || (D.halt))   // initialization or flush
         begin
       A.Curr_Pc <= 0;
       A.Curr_Instr <= 0;
@@ -135,7 +135,7 @@ module Datapath #(
 
   // ID_EX_Reg B;
   always @(posedge clk) begin
-    if ((reset) || (Reg_Stall) || (PcSel))   // initialization or flush or generate a NOP if hazard
+    if ((reset) || (Reg_Stall) || (PcSel) || (D.halt))   // initialization or flush or generate a NOP if hazard
         begin
       B.ALUSrc <= 0;
       B.MemtoReg <= 0;
@@ -238,7 +238,7 @@ module Datapath #(
 
   // EX_MEM_Reg C;
   always @(posedge clk) begin
-    if (reset)   // initialization
+    if (reset || (D.halt))   // initialization
         begin
       C.RegWrite <= 0;
       C.MemtoReg <= 0;
@@ -290,7 +290,7 @@ module Datapath #(
 
   // MEM_WB_Reg D;
   always @(posedge clk) begin
-    if (reset)   // initialization
+    if (reset || (D.halt))   // initialization
         begin
       D.RegWrite <= 0;
       D.MemtoReg <= 0;
