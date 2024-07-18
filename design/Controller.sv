@@ -30,7 +30,7 @@ module Controller (
   assign IJ_TYPE = 7'b1100111; //jalr
   assign U_TYPE = 7'b0110111; //lui
   assign J_TYPE = 7'b1101111; //jal
-  assign H_TYPE = 7'b1111111;
+  assign H_TYPE = 7'b1111111;//halt
   assign LW = 7'b0000011;  //lw
   assign SW = 7'b0100011;  //sw
   assign BR = 7'b1100011;  //beq
