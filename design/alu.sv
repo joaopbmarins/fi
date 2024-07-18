@@ -34,7 +34,7 @@ module alu#(
             4'b1000:        // Equal
                     ALUResult = (SrcA == SrcB) ? 1 : 0;
             4'b1001:        // LUI
-                    ALUResult = {SrcB[19:0], 12'b0};
+                    ALUResult = 1;
             4'b1010:        // BNE
                     ALUResult = (SrcA != SrcB) ? 1 : 0;
             4'b1011:        // BLT
@@ -43,6 +43,10 @@ module alu#(
                     ALUResult = ($signed(SrcA) < $signed(SrcB)) ? 1 : 0;
             4'b1101:        // BGE
                     ALUResult = ($signed(SrcA) >= $signed(SrcB)) ? 1 : 0;
+            4'b1110:        // Jal
+                    ALUResult = 1;
+            4'b1111:        // Jalr
+                    ALUResult = SrcA;
             default:
                     ALUResult = 0;
             endcase

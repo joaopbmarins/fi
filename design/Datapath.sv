@@ -13,17 +13,18 @@ module Datapath #(
     input  logic                 clk,
     reset,
     RegWrite,
-    MemtoReg,  // Register file writing enable   // Memory or ALU MUX
     ALUsrc,
     MemWrite,  // Register file or Immediate MUX // Memroy Writing Enable
     MemRead,  // Memroy Reading Enable
     Branch,  // Branch Enable
-    input  logic [          1:0] ALUOp,
+    JalrSel,
+    input  logic [          2:0] ALUOp,
     input  logic [ALU_CC_W -1:0] ALU_CC,         // ALU Control Code ( input of the ALU )
+    input  logic [          1:0] MemtoReg,  // Register file writing enable   // Memory or ALU MUX
     output logic [          6:0] opcode,
     output logic [          6:0] Funct7,
     output logic [          2:0] Funct3,
-    output logic [          1:0] ALUOp_Current,
+    output logic [          2:0] ALUOp_Current,
     output logic [   DATA_W-1:0] WB_Data,        //Result After the last MUX
 
     // Para depuração no tesbench:
@@ -136,6 +137,7 @@ module Datapath #(
         begin
       B.ALUSrc <= 0;
       B.MemtoReg <= 0;
+      B.JalrSel <= 0;
       B.RegWrite <= 0;
       B.MemRead <= 0;
       B.MemWrite <= 0;
@@ -154,6 +156,7 @@ module Datapath #(
     end else begin
       B.ALUSrc <= ALUsrc;
       B.MemtoReg <= MemtoReg;
+      B.JalrSel <= JalrSel;
       B.RegWrite <= RegWrite;
       B.MemRead <= MemRead;
       B.MemWrite <= MemWrite;
@@ -222,6 +225,7 @@ module Datapath #(
       B.ImmG,
       B.Branch,
       ALUResult,
+      B.JalrSel,
       BrImm,
       Old_PC_Four,
       BrPC,
@@ -304,9 +308,11 @@ module Datapath #(
   end
 
   //--// The LAST Block
-  mux2 #(32) resmux (
-      D.Alu_Result,
-      D.MemReadData,
+  mux4 #(32) resmux (
+      D.Alu_Result,//00
+      D.MemReadData,//01
+      D.Pc_Four, //10 novas entradas no MUX
+      D.Imm_Out,//11
       D.MemtoReg,
       WrmuxSrc
   );
