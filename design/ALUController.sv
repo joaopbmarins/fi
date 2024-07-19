@@ -16,7 +16,6 @@ module ALUController (
       ((ALUOp == 3'b010) && (Funct3 == 3'b000) && (Funct7 == 7'b0100000)) ||   //R-SUB
       (ALUOp == 3'b011) || //U-LUI
       ((ALUOp == 3'b101) && (Funct3 == 3'b000)) ||//jalr
-      ((ALUOp == 3'b001) && (Funct3 == 3'b001)) ||//BNE
       ((ALUOp == 3'b001) && (Funct3 == 3'b100)) ||//BLT
       ((ALUOp == 3'b001) && (Funct3 == 3'b101));  //BGE
 
@@ -27,6 +26,7 @@ module ALUController (
       ((ALUOp == 3'b010) && (Funct3 == 3'b100) && (Funct7 == 7'b0000000)) ||  //R-XOR
       ((ALUOp == 3'b101) && (Funct3 == 3'b000)) ||//jalr
       ((ALUOp == 3'b100) && (Funct3 == 3'b000)) ||//jal
+      ((ALUOp == 3'b001) && (Funct3 == 3'b001)) ||//BNE
       ((ALUOp == 3'b001) && (Funct3 == 3'b100));//BLT
 
   assign Operation[2] =  ((ALUOp==3'b010) && (Funct3==3'b101) && (Funct7==7'b0000000)) || // R\I->>
