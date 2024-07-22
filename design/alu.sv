@@ -30,11 +30,11 @@ module alu#(
             4'b0110:        // XOR
                     ALUResult = SrcA ^ SrcB;  
             4'b0111:        // SRAI
-                    ALUResult = SrcA >>> SrcB[5-1:0];
-            4'b1000:        // Equal
+                    ALUResult = $signed(SrcA) >>> SrcB[4:0];
+            4'b1000:        // Equal BEQ
                     ALUResult = (SrcA == SrcB) ? 1 : 0;
             4'b1001:        // LUI
-                    ALUResult = 1;
+                    ALUResult = {SrcB[19:0], 12'b0};
             4'b1010:        // BNE
                     ALUResult = (SrcA != SrcB) ? 1 : 0;
             4'b1011:        // BLT

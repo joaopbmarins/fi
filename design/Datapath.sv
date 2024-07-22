@@ -18,6 +18,7 @@ module Datapath #(
     MemRead,  // Memroy Reading Enable
     Branch,  // Branch Enable
     JalrSel,
+    halt,
     input  logic [          2:0] ALUOp,
     input  logic [ALU_CC_W -1:0] ALU_CC,         // ALU Control Code ( input of the ALU )
     input  logic [          1:0] MemtoReg,  // Register file writing enable   // Memory or ALU MUX
@@ -62,6 +63,7 @@ module Datapath #(
   adder #(9) pcadd (
       PC,
       9'b100,
+      D.halt,
       PCPlus4
   );
   mux2 #(9) pcmux (
@@ -85,7 +87,7 @@ module Datapath #(
 
   // IF_ID_Reg A;
   always @(posedge clk) begin
-    if ((reset) || (PcSel))   // initialization or flush
+    if ((reset) || (PcSel) || (D.halt))   // initialization or flush
         begin
       A.Curr_Pc <= 0;
       A.Curr_Instr <= 0;
@@ -133,10 +135,11 @@ module Datapath #(
 
   // ID_EX_Reg B;
   always @(posedge clk) begin
-    if ((reset) || (Reg_Stall) || (PcSel))   // initialization or flush or generate a NOP if hazard
+    if ((reset) || (Reg_Stall) || (PcSel) || (D.halt))   // initialization or flush or generate a NOP if hazard
         begin
       B.ALUSrc <= 0;
       B.MemtoReg <= 0;
+      B.halt <= 0;
       B.JalrSel <= 0;
       B.RegWrite <= 0;
       B.MemRead <= 0;
@@ -156,6 +159,7 @@ module Datapath #(
     end else begin
       B.ALUSrc <= ALUsrc;
       B.MemtoReg <= MemtoReg;
+      B.halt <= halt;
       B.JalrSel <= JalrSel;
       B.RegWrite <= RegWrite;
       B.MemRead <= MemRead;
@@ -234,10 +238,11 @@ module Datapath #(
 
   // EX_MEM_Reg C;
   always @(posedge clk) begin
-    if (reset)   // initialization
+    if (reset || (D.halt))   // initialization
         begin
       C.RegWrite <= 0;
       C.MemtoReg <= 0;
+      C.halt <= 0;
       C.MemRead <= 0;
       C.MemWrite <= 0;
       C.Pc_Imm <= 0;
@@ -251,6 +256,7 @@ module Datapath #(
     end else begin
       C.RegWrite <= B.RegWrite;
       C.MemtoReg <= B.MemtoReg;
+      C.halt <= B.halt;
       C.MemRead <= B.MemRead;
       C.MemWrite <= B.MemWrite;
       C.Pc_Imm <= BrImm;
@@ -284,10 +290,11 @@ module Datapath #(
 
   // MEM_WB_Reg D;
   always @(posedge clk) begin
-    if (reset)   // initialization
+    if (reset || (D.halt))   // initialization
         begin
       D.RegWrite <= 0;
       D.MemtoReg <= 0;
+      D.halt <= 0;
       D.Pc_Imm <= 0;
       D.Pc_Four <= 0;
       D.Imm_Out <= 0;
@@ -297,6 +304,7 @@ module Datapath #(
     end else begin
       D.RegWrite <= C.RegWrite;
       D.MemtoReg <= C.MemtoReg;
+      D.halt <= C.halt;
       D.Pc_Imm <= C.Pc_Imm;
       D.Pc_Four <= C.Pc_Four;
       D.Imm_Out <= C.Imm_Out;

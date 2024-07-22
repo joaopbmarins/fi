@@ -5,9 +5,10 @@ module adder #(
 ) (
     input  logic [WIDTH-1:0] a,
     b,
+    input logic halt,
     output logic [WIDTH-1:0] y
 );
 
-  assign y = a + b;
+  assign y = halt ? a : a + b;
 
 endmodule
